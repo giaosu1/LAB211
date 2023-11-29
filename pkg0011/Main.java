@@ -15,9 +15,18 @@ public class Main {
     }
 
 //    2 -> 16
-    public static String binaryToHexa(String binary) {
-        String hexa = anyToDecimal(binary, 2);
-        return decimalToAny(hexa, 16);
+    public static String binaryToHexa(String binaryNumber) {
+        //if (binaryNumber.length() % 4 != 0) {
+        //    throw new IllegalArgumentException("Invalid binary number length: " + binaryNumber.length());
+        //}
+        StringBuilder hexadecimalNumber = new StringBuilder();
+        for (int i = 0; i < binaryNumber.length(); i += 4) {
+            String fourBits = binaryNumber.substring(i, i + 4);
+            int decimalValue = Integer.parseInt(fourBits, 2);
+            char hexadecimalDigit = Character.forDigit(decimalValue, 16);
+            hexadecimalNumber.append(hexadecimalDigit);
+        }
+        return hexadecimalNumber.toString();
     }
 
 //    10 -> 2
@@ -31,9 +40,14 @@ public class Main {
     }
 
 //    16 -> 2
-    public static String hexaToBinary(String hexa) {
-        String binary = anyToDecimal(hexa, 16);
-        return decimalToAny(binary, 2);
+    public static String hexaToBinary(String hexadecimalNumber) {
+        StringBuilder binaryNumber = new StringBuilder();
+        for (char digit : hexadecimalNumber.toCharArray()) {
+            String binaryValue = Integer.toBinaryString(Character.digit(digit, 16));
+            binaryNumber.append(binaryValue);
+        }
+        return binaryNumber.toString();
+
     }
 
 //    16 -> 10
