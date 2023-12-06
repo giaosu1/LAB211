@@ -70,10 +70,12 @@ public class Main {
 
 //    10 to any base
     public static String decimalToAny(String value, int base) {
-        if (equalZero(value)) {
-            return "0";
-        }
-        BigInteger decimal = new BigInteger(value);
+        // if (equalZero(value)) {
+        //     return "0";
+        // }
+
+        String[] split = value.split([.]);
+        BigInteger decimal = new BigInteger(split[0]);
         StringBuilder result = new StringBuilder();
 
         while (decimal.compareTo(BigInteger.ZERO) > 0) {
@@ -81,7 +83,17 @@ public class Main {
             result.append(Character.forDigit(remainder.intValue(), base));
             decimal = decimal.divide(BigInteger.valueOf(base));
         }
-
+        result = result.reverse();
+        result.append(".");
+        decimal = new BigInteger(split[1]);
+        int count = 0;
+        while (decimal.compareTo(BigInteger.ZERO) > 0) {
+            BigInteger remainder = decimal.mod(BigInteger.valueOf(base));
+            result.append(Character.forDigit(remainder.intValue(), base));
+            decimal = decimal.divide(BigInteger.valueOf(base));
+            if(count++ == 11)
+                break;
+        }   
         return result.reverse().toString().toUpperCase();
     }
 
